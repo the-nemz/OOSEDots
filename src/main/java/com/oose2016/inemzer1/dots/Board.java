@@ -14,9 +14,9 @@ public class Board {
         this.verticalLines = new Line[20];
         int count = 0;
         for (int a = 0; a < 5; a++) {
-            for (int b = 5; b < 4; b++) {
-                this.verticalLines[count] = new Line(a, b, false, 'v');
-                this.horizontalLines[count] = new Line(b, a, false, 'h');
+            for (int b = 0; b < 4; b++) {
+                this.verticalLines[count] = new Line(b, a, false, 'v');
+                this.horizontalLines[count] = new Line(a, b, false, 'h');
                 count++;
             }
         }
@@ -153,6 +153,21 @@ public class Board {
 
     public boolean moveVertical(Move move) {
         return !this.checkVert(move.row, move.col);
+    }
+
+    @Override
+    public String toString() {
+        String out = "";
+        for (int a = 0; a < 20; a++) {
+            out = out + this.horizontalLines[a] + "\n";
+        }
+        for (int a = 0; a < 20; a++) {
+            out = out + this.verticalLines[a] + "\n";
+        }
+        for (int a = 0; a < 16; a++) {
+            out = out + this.boxes[a] + "\n";
+        }
+        return out;
     }
 
 }

@@ -71,10 +71,7 @@ Model.prototype.makeVerticalMove = function(row, col) {
 
 
 Model.prototype.getBoard = function() {
-<<<<<<< HEAD
-    alert(this.gameId);
-=======
->>>>>>> 4f03b33a615c00f3efb960cfc3612f8bbed28213
+    //alert(this.gameId);
     return $.get('/dots/api/games/'+this.gameId+'/board', '{}', null, 'json');
 }
 

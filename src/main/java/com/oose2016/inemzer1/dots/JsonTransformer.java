@@ -20,6 +20,7 @@ public class JsonTransformer implements ResponseTransformer {
         if (model instanceof Response) {
             return gson.toJson(new HashMap<>());
         }
+        System.out.println(gson.toJson(model));
         return gson.toJson(model);
     }
 

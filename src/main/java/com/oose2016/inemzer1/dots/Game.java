@@ -6,35 +6,44 @@ package com.oose2016.inemzer1.dots;
 public class Game {
 
     public String gameId;
-    public String playerId;
-    public String playerType;
-
+    public Player player1;
+    public Player player2;
     public transient Board board;
     public transient State state;
 
 
-    public Game(String gameId, String playerId, String playerType) {
-        this.gameId = gameId;
-        this.playerId = playerId;
-        this.playerType = playerType;
+    public Game(Player starter) {
+        this.gameId = starter.gameId;
+        if (starter.playerType.equals("RED")) {
+            this.player1 = starter;
+        } else {
+            this.player2 = starter;
+        }
         this.board = new Board();
         this.state = new State();
     }
 
-    public void join() {
-        if (this.playerId.equals("1")) {
-            this.playerId = "2";
-            this.playerType = "BLUE";
-        } else {
-            this.playerId = "1";
-            this.playerType = "RED";
+    public Player join() {
+        System.out.println("1");
+        if (this.player2 == null) {
+            System.out.println("2");
+            this.player2 = new Player(this.gameId, "2", "BLUE");
+            System.out.println("3");
+            this.state.startIt();
+            System.out.println("4");
+            return this.player2;
+        } else if (this.player1 == null) {
+            System.out.println("5");
+            this.player1 = new Player(this.gameId, "1", "RED");
+            this.state.startIt();
+            return this.player1;
         }
+        return null;
     }
 
     @Override
     public String toString() {
-        return "gameId:" + (String)this.gameId + " playerId:" + (String)this.playerId +
-                " playerType:" + (String)this.playerType;
+        return "gameId:" + this.gameId;
     }
 
 

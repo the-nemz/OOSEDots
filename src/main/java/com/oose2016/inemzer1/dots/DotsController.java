@@ -1,10 +1,6 @@
 package com.oose2016.inemzer1.dots;
 
-import com.google.gson.Gson;
-
 import java.util.Collections;
-import java.util.HashMap;
-
 import static spark.Spark.*;
 
 /**
@@ -35,7 +31,7 @@ public class DotsController {
 
         put(API_CONTEXT + "/games/:gameId", "application/json", (request, response) -> {
             String gid = request.params(":gameId");
-            System.out.println("route game/:gameId");
+            System.out.println("route game/:gameIdhere");
             try {
                 response.status(200);
                 return this.service.joinGame(gid, request.body());
@@ -51,7 +47,7 @@ public class DotsController {
             System.out.println("\nroute game/:gameId/board");
             try {
                 response.status(200);
-                return this.service.getBoard(gid, request.body());
+                return this.service.getBoard(gid);
             } catch (Exception ex) {
                 System.out.println("Failed to get board.");
                 response.status(404);
@@ -64,7 +60,7 @@ public class DotsController {
             System.out.println("\nroute game/:gameId/state");
             try {
                 response.status(200);
-                return this.service.getState(gid, request.body());
+                return this.service.getState(gid);
             } catch (Exception ex) {
                 System.out.println("Failed to get state.");
                 response.status(404);

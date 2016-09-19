@@ -17,19 +17,29 @@ public class State {
         this.whoseTurn = "RED";
     }
 
+    public void startIt() {
+        this.state = "IN_PROGRESS";
+    }
+
     public void scoreForRed(int scores) {
         this.redScore += scores;
-        this.updateState();
+        this.checkDone();
     }
 
     public void scoreForBlue(int scores) {
         this.blueScore += scores;
-        this.updateState();
+        this.checkDone();
     }
 
-    public void updateState() {
+    public void checkDone() {
         if ((this.redScore + this.blueScore) == 16) {
             this.state = "FINISHED";
         }
+    }
+
+    @Override
+    public String toString() {
+        return this.state + " Red:" + String.valueOf(this.redScore) + " Blue:" +
+                String.valueOf(this.blueScore) + " Turn:" + this.whoseTurn;
     }
 }

@@ -21,4 +21,10 @@ public class Line {
         this.filled = true;
     }
 
+    @Override
+    public String toString() {
+        return "R" + String.valueOf(this.row) + " C" + String.valueOf(this.col) +
+               " " + this.dir + " " + String.valueOf(this.filled);
+    }
+
 }

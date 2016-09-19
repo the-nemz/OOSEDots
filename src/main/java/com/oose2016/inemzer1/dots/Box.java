@@ -31,4 +31,10 @@ public class Box {
         this.owner = "BLUE";
     }
 
+    @Override
+    public String toString() {
+        return "R" + String.valueOf(this.row) + " C" + String.valueOf(this.col) +
+                " " + this.owner;
+    }
+
 }

@@ -35,50 +35,49 @@ public class DotsService {
         return null;
     }
 
-    public Game createGame(String body) {
-        Game newGame = new Gson().fromJson(body, Game.class);
-        if (newGame.playerType.equals("RED")) {
-            newGame.playerId = "1";
+    public Player createGame(String body) {
+        Player starter = new Gson().fromJson(body, Player.class);
+        if (starter.playerType.equals("RED")) {
+            starter.playerId = "1";
         } else {
-            newGame.playerId = "2";
+            starter.playerId = "2";
         }
-        newGame.gameId = String.valueOf(this.gameNum);
+        starter.gameId = String.valueOf(this.gameNum);
         this.gameNum++;
+        Game newGame = new Game(starter);
         this.theGames.put(newGame.gameId, newGame);
         //this.theGames.add(newGame);
-        return newGame;
+        return starter;
     }
 
-    public Game joinGame(String gid, String body) {
+    public Player joinGame(String gid, String body) {
         System.out.println(gid);
         System.out.println(body);
         //Game tempGame = new Gson().fromJson(body, Game.class);
         Game game = theGames.get(gid);
+        System.out.println("here");
         //Game game = this.findGame(tempGame.gameId);
-        game.join();
-        System.out.println(game);
-        return game;
+        Player joiner = game.join();
+        System.out.println(joiner);
+        return joiner;
     }
 
-    public Board getBoard(String gid, String body) {
+    public Board getBoard(String gid) {
         System.out.println("b gid:" + gid);
-        System.out.println("b body:" + body);
-        //Game tempGame = new Gson().fromJson(body, Game.class);
         Game game = this.theGames.get(gid);
-        //System.out.println("t:" + tempGame);
         //Game game = this.findGame(tempGame.gameId);
-        System.out.println("b g:" + game);
+        //System.out.println(game.board);
+        //System.out.println(new Gson().toJson(game.board));
         return game.board;
     }
 
-    public State getState(String gid, String body) {
+    public State getState(String gid) {
         System.out.println("s gid:" + gid);
-        System.out.println("s body:" + body);
-        //Game tempGame = new Gson().fromJson(body, Game.class);
-        //System.out.println("t:" + tempGame);
         Game game = this.theGames.get(gid);
         //Game game = this.findGame(tempGame.gameId);
         System.out.println("s g:" + game);
+        //System.out.println(game.state);
+        //System.out.println(new Gson().toJson(game.state));
         return game.state;
     }
 
