@@ -51,19 +51,14 @@ public class DotsService {
     }
 
     public Player joinGame(String gid, String body) {
-        System.out.println(gid);
-        System.out.println(body);
         //Game tempGame = new Gson().fromJson(body, Game.class);
         Game game = theGames.get(gid);
-        System.out.println("here");
         //Game game = this.findGame(tempGame.gameId);
         Player joiner = game.join();
-        System.out.println(joiner);
         return joiner;
     }
 
     public Board getBoard(String gid) {
-        System.out.println("b gid:" + gid);
         Game game = this.theGames.get(gid);
         //Game game = this.findGame(tempGame.gameId);
         //System.out.println(game.board);
@@ -72,19 +67,32 @@ public class DotsService {
     }
 
     public State getState(String gid) {
-        System.out.println("s gid:" + gid);
         Game game = this.theGames.get(gid);
         //Game game = this.findGame(tempGame.gameId);
-        System.out.println("s g:" + game);
         //System.out.println(game.state);
         //System.out.println(new Gson().toJson(game.state));
         return game.state;
     }
 
-    public void horizontalMove(String gid, String body) {
+    public int horizontalMove(String gid, String body) {
         Move move = new Gson().fromJson(body, Move.class);
         Game game = this.theGames.get(gid);
+
+        //If the playerId is invalid
+        if (!move.playerId.equals("1") && !move.playerId.equals("2")) {
+            System.out.println("Invalid playerId: " + move.playerId);
+            return 404;
+        }
+
+        //If it is not the correct player's turn
+        if (!(move.playerId.equals("1") && game.state.whoseTurn.equals("RED")) &&
+                !(move.playerId.equals("2") && game.state.whoseTurn.equals("BLUE"))) {
+            System.out.println("Wrong turn " + move.playerId + " " + game.state.whoseTurn);
+            return 422;
+        }
+
         if (game.board.moveHorizontal(move)) {
+            //valid move
             int scores = game.board.checkHoriScore(move);
             if (scores > 0) {
                 if (move.playerId.equals("1")) {
@@ -96,14 +104,36 @@ public class DotsService {
                     //do something
                     System.out.println("Game over!");
                 }
+            } else {
+                game.state.nextTurn();
             }
+            return 200;
+        } else {
+            //invalid move
+            System.out.println("invalid move");
+            return 422;
         }
     }
 
-    public void verticalMove(String gid, String body) {
+    public int verticalMove(String gid, String body) {
         Move move = new Gson().fromJson(body, Move.class);
         Game game = this.theGames.get(gid);
+
+        //If the playerId is invalid
+        if (!move.playerId.equals("1") && !move.playerId.equals("2")) {
+            System.out.println("Invalid playerId: " + move.playerId);
+            return 404;
+        }
+
+        //If it is not the correct player's turn
+        if (!(move.playerId.equals("1") && game.state.whoseTurn.equals("RED")) &&
+                !(move.playerId.equals("2") && game.state.whoseTurn.equals("BLUE"))) {
+            System.out.println("Wrong turn" + move.playerId + " " + game.state.whoseTurn);
+            return 422;
+        }
+
         if (game.board.moveVertical(move)) {
+            //valid move
             int scores = game.board.checkVertScore(move);
             if (scores > 0) {
                 if (move.playerId.equals("1")) {
@@ -115,7 +145,14 @@ public class DotsService {
                     //do something
                     System.out.println("Game over!");
                 }
+            } else {
+                game.state.nextTurn();
             }
+            return 200;
+        } else {
+            //invalid move
+            System.out.println("invalid move");
+            return 422;
         }
     }
 

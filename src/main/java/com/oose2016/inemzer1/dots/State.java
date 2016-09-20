@@ -21,13 +21,23 @@ public class State {
         this.state = "IN_PROGRESS";
     }
 
+    public void nextTurn() {
+        if (this.whoseTurn.equals("RED")) {
+            this.whoseTurn = "BLUE";
+        } else {
+            this.whoseTurn = "RED";
+        }
+    }
+
     public void scoreForRed(int scores) {
         this.redScore += scores;
+        System.out.println("Red scored " + String.valueOf(scores));
         this.checkDone();
     }
 
     public void scoreForBlue(int scores) {
         this.blueScore += scores;
+        System.out.println("Blue scored " + String.valueOf(scores));
         this.checkDone();
     }
 

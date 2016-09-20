@@ -31,32 +31,48 @@ public class Board {
         }
     }
 
-    public boolean checkHori(int r, int c) {
+    /**
+     * Checks if it is a horizontal valid move. Returns index in array
+     * if the line is found and not already filled; otehrwise returns -1
+     * Returns -2 if error
+     * @param r the row
+     * @param c the col
+     * @return explained above
+     */
+    public int checkHori(int r, int c) {
         for (int a = 0;  a < 20; a++) {
             if (r == this.horizontalLines[a].row &&
                     c == this.horizontalLines[a].col) {
-                if (this.horizontalLines[a].filled) {
-                    return true;
+                if (!this.horizontalLines[a].filled) {
+                    return a;
                 } else {
-                    return false;
+                    return -1;
                 }
             }
         }
-        return false;
+        return -2;
     }
 
-    public boolean checkVert(int r, int c) {
+    /**
+     * Checks if it is a vertical valid move. Returns index in array
+     * if the line is found and not already filled; otehrwise returns -1
+     * Returns -2 if error
+     * @param r the row
+     * @param c the col
+     * @return explained above
+     */
+    public int checkVert(int r, int c) {
         for (int a = 0;  a < 20; a++) {
             if (r == this.verticalLines[a].row &&
                     c == this.verticalLines[a].col) {
-                if (this.verticalLines[a].filled) {
-                    return true;
+                if (!this.verticalLines[a].filled) {
+                    return a;
                 } else {
-                    return false;
+                    return -1;
                 }
             }
         }
-        return false;
+        return -2;
     }
 
     public int checkHoriScore(Move move) {
@@ -64,9 +80,9 @@ public class Board {
         switch (move.row) {
             case 0:
                 //check down
-                if (this.checkVert(move.row, move.col) &&
-                        this.checkVert(move.row, move.col + 1) &&
-                        this.checkHori(move.row + 1, move.col)) {
+                if ((this.checkVert(move.row, move.col) == -1) &&
+                        (this.checkVert(move.row, move.col + 1) == -1) &&
+                        (this.checkHori(move.row + 1, move.col) == -1)) {
                     this.boxes[move.col].fill(move.playerId);
                     scores++;
                 }
@@ -75,24 +91,24 @@ public class Board {
             case 2:
             case 3:
                 //check down and up
-                if (this.checkVert(move.row, move.col) &&
-                        this.checkVert(move.row, move.col + 1) &&
-                        this.checkHori(move.row + 1, move.col)) {
+                if ((this.checkVert(move.row, move.col) == -1) &&
+                        (this.checkVert(move.row, move.col + 1) == -1) &&
+                        (this.checkHori(move.row + 1, move.col) == -1)) {
                     this.boxes[(4 * move.row) + move.col].fill(move.playerId);
                     scores++;
                 }
-                if (this.checkVert(move.row - 1, move.col) &&
-                        this.checkVert(move.row - 1, move.col + 1) &&
-                        this.checkHori(move.row - 1, move.col)) {
+                if ((this.checkVert(move.row - 1, move.col) == -1) &&
+                        (this.checkVert(move.row - 1, move.col + 1) == -1) &&
+                        (this.checkHori(move.row - 1, move.col) == -1)) {
                     this.boxes[(4 * (move.row - 1)) + move.col].fill(move.playerId);
                     scores++;
                 }
                 break;
             case 4:
                 //check up
-                if (this.checkVert(move.row - 1, move.col) &&
-                        this.checkVert(move.row - 1, move.col + 1) &&
-                        this.checkHori(move.row - 1, move.col)) {
+                if ((this.checkVert(move.row - 1, move.col) == -1) &&
+                        (this.checkVert(move.row - 1, move.col + 1) == -1) &&
+                        (this.checkHori(move.row - 1, move.col) == -1)) {
                     this.boxes[(4 * (move.row - 1)) + move.col].fill(move.playerId);
                     scores++;
                 }
@@ -108,9 +124,9 @@ public class Board {
         switch (move.col) {
             case 0:
                 //check right
-                if (this.checkHori(move.row, move.col) &&
-                        this.checkHori(move.row + 1, move.col) &&
-                        this.checkVert(move.row, move.col + 1)) {
+                if ((this.checkHori(move.row, move.col) == -1) &&
+                        (this.checkHori(move.row + 1, move.col) == -1) &&
+                        (this.checkVert(move.row, move.col + 1) == -1)) {
                     this.boxes[4 * move.row].fill(move.playerId);
                     scores++;
                 }
@@ -119,25 +135,25 @@ public class Board {
             case 2:
             case 3:
                 // check right and left
-                if (this.checkHori(move.row, move.col) &&
-                        this.checkHori(move.row + 1, move.col) &&
-                        this.checkVert(move.row, move.col + 1)) {
+                if ((this.checkHori(move.row, move.col) == -1) &&
+                        (this.checkHori(move.row + 1, move.col) == -1) &&
+                        (this.checkVert(move.row, move.col + 1) == -1)) {
                     this.boxes[(4 * move.row) + move.col].fill(move.playerId);
                     scores++;
                 }
-                if (this.checkHori(move.row - 1, move.col) &&
-                        this.checkHori(move.row + 1, move.col - 1) &&
-                        this.checkVert(move.row, move.col -1)) {
-                    this.boxes[(4 * move.row) + move.col].fill(move.playerId);
+                if ((this.checkHori(move.row, move.col - 1) == -1) &&
+                        (this.checkHori(move.row + 1, move.col - 1) == -1) &&
+                        (this.checkVert(move.row, move.col - 1) == -1)) {
+                    this.boxes[(4 * move.row) + move.col - 1].fill(move.playerId);
                     scores++;
                 }
                 break;
             case 4:
                 //check left
-                if (this.checkHori(move.row - 1, move.col) &&
-                        this.checkHori(move.row + 1, move.col - 1) &&
-                        this.checkVert(move.row, move.col -1)) {
-                    this.boxes[(4 * move.row) + move.col].fill(move.playerId);
+                if ((this.checkHori(move.row, move.col - 1) == -1) &&
+                        (this.checkHori(move.row + 1, move.col - 1) == -1) &&
+                        (this.checkVert(move.row, move.col - 1) == -1)) {
+                    this.boxes[(4 * move.row) + move.col - 1].fill(move.playerId);
                     scores++;
                 }
                 break;
@@ -148,11 +164,21 @@ public class Board {
     }
 
     public boolean moveHorizontal(Move move) {
-        return !this.checkHori(move.row, move.col);
+        int ind = this.checkHori(move.row, move.col);
+        if (ind >= 0) {
+            this.horizontalLines[ind].fill();
+            return true;
+        }
+        return false;
     }
 
     public boolean moveVertical(Move move) {
-        return !this.checkVert(move.row, move.col);
+        int ind = this.checkVert(move.row, move.col);
+        if (ind >= 0) {
+            this.verticalLines[ind].fill();
+            return true;
+        }
+        return false;
     }
 
     @Override

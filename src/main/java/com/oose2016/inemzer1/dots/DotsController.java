@@ -31,7 +31,7 @@ public class DotsController {
 
         put(API_CONTEXT + "/games/:gameId", "application/json", (request, response) -> {
             String gid = request.params(":gameId");
-            System.out.println("route game/:gameIdhere");
+            //System.out.println("route game/:gameIdhere");
             try {
                 response.status(200);
                 return this.service.joinGame(gid, request.body());
@@ -44,7 +44,7 @@ public class DotsController {
 
         get(API_CONTEXT + "/games/:gameId/board", "application/json", (request, response) -> {
             String gid = request.params(":gameId");
-            System.out.println("\nroute game/:gameId/board");
+            //System.out.println("\nroute game/:gameId/board");
             try {
                 response.status(200);
                 return this.service.getBoard(gid);
@@ -57,7 +57,7 @@ public class DotsController {
 
         get(API_CONTEXT + "/games/:gameId/state", "application/json", (request, response) -> {
             String gid = request.params(":gameId");
-            System.out.println("\nroute game/:gameId/state");
+            //System.out.println("\nroute game/:gameId/state");
             try {
                 response.status(200);
                 return this.service.getState(gid);
