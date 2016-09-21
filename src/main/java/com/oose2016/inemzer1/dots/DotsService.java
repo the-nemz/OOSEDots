@@ -107,14 +107,12 @@ public class DotsService {
 
         //If the playerId is invalid
         if (!move.playerId.equals("1") && !move.playerId.equals("2")) {
-            System.out.println("Invalid playerId: " + move.playerId);
             throw new IDInvalidException();
         }
 
         //If it is not the correct player's turn
         if (!(move.playerId.equals("1") && game.state.whoseTurn.equals("RED")) &&
                 !(move.playerId.equals("2") && game.state.whoseTurn.equals("BLUE"))) {
-            System.out.println("Wrong turn " + move.playerId + " " + game.state.whoseTurn);
             throw new BadMoveTurnException();
         }
 
@@ -128,16 +126,12 @@ public class DotsService {
                 } else {
                     game.state.scoreForBlue(scores);
                 }
-                if (game.state.state == "FINISHED") {
-                    System.out.println("Game over!");
-                }
             } else {
                 //next turn if no scores
                 game.state.nextTurn();
             }
         } else {
             //invalid move
-            System.out.println("invalid move");
             throw new BadMoveTurnException();
         }
     }
@@ -160,14 +154,12 @@ public class DotsService {
 
         //If the playerId is invalid
         if (!move.playerId.equals("1") && !move.playerId.equals("2")) {
-            System.out.println("Invalid playerId: " + move.playerId);
             throw new IDInvalidException();
         }
 
         //If it is not the correct player's turn
         if (!(move.playerId.equals("1") && game.state.whoseTurn.equals("RED")) &&
                 !(move.playerId.equals("2") && game.state.whoseTurn.equals("BLUE"))) {
-            System.out.println("Wrong turn" + move.playerId + " " + game.state.whoseTurn);
             throw new BadMoveTurnException();
         }
 
@@ -181,16 +173,12 @@ public class DotsService {
                 } else {
                     game.state.scoreForBlue(scores);
                 }
-                if (game.state.state == "FINISHED") {
-                    System.out.println("Game over!");
-                }
             } else {
                 //next turn if no scores
                 game.state.nextTurn();
             }
         } else {
             //invalid move
-            System.out.println("invalid move");
             throw new BadMoveTurnException();
         }
     }

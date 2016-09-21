@@ -10,6 +10,13 @@ public class Line {
     public boolean filled;
     public transient char dir;
 
+    /**
+     * Simple line constructor.
+     * @param r the row
+     * @param c the col
+     * @param f if filled
+     * @param d the direction
+     */
     public Line(int r, int c, boolean f, char d) {
         this.row = r;
         this.col = c;
@@ -17,10 +24,17 @@ public class Line {
         this.dir = d;
     }
 
+    /**
+     * Just fills the line.
+     */
     public void fill() {
         this.filled = true;
     }
 
+    /**
+     * A toString for testing.
+     * @return the string representation
+     */
     @Override
     public String toString() {
         return "R" + String.valueOf(this.row) + " C" + String.valueOf(this.col) +
