@@ -23,7 +23,6 @@ public class DotsController {
                 response.status(201);
                 return this.service.createGame(request.body());
             } catch(Exception ex) {
-                System.out.println("Failed to create game.");
                 response.status(500);
             }
             return Collections.EMPTY_MAP;
@@ -31,25 +30,24 @@ public class DotsController {
 
         put(API_CONTEXT + "/games/:gameId", "application/json", (request, response) -> {
             String gid = request.params(":gameId");
-            //System.out.println("route game/:gameIdhere");
             try {
                 response.status(200);
-                return this.service.joinGame(gid, request.body());
-            } catch (Exception ex) {
-                System.out.println("Failed to join game.");
-                response.status(500);
+                return this.service.joinGame(gid);
+            } catch (IDInvalidException ex) {
+                response.status(404);
+                return Collections.EMPTY_MAP;
+            } catch (GameFullException ex) {
+                response.status(410);
                 return Collections.EMPTY_MAP;
             }
         }, new JsonTransformer());
 
         get(API_CONTEXT + "/games/:gameId/board", "application/json", (request, response) -> {
             String gid = request.params(":gameId");
-            //System.out.println("\nroute game/:gameId/board");
             try {
                 response.status(200);
                 return this.service.getBoard(gid);
-            } catch (Exception ex) {
-                System.out.println("Failed to get board.");
+            } catch (IDInvalidException ex) {
                 response.status(404);
                 return Collections.EMPTY_MAP;
             }
@@ -57,12 +55,10 @@ public class DotsController {
 
         get(API_CONTEXT + "/games/:gameId/state", "application/json", (request, response) -> {
             String gid = request.params(":gameId");
-            //System.out.println("\nroute game/:gameId/state");
             try {
                 response.status(200);
                 return this.service.getState(gid);
-            } catch (Exception ex) {
-                System.out.println("Failed to get state.");
+            } catch (IDInvalidException ex) {
                 response.status(404);
                 return Collections.EMPTY_MAP;
             }
@@ -74,7 +70,11 @@ public class DotsController {
             try {
                 response.status(200);
                 this.service.horizontalMove(gid, request.body());
-            } catch (Exception ex) {
+                System.out.println("Successfully moved horizontal.");
+            } catch (IDInvalidException ex) {
+                System.out.println("Failed to move horizontal.");
+                response.status(404);
+            } catch (BadMoveTurnException ex) {
                 System.out.println("Failed to move horizontal.");
                 response.status(422);
             }
@@ -87,7 +87,11 @@ public class DotsController {
             try {
                 response.status(200);
                 this.service.verticalMove(gid, request.body());
-            } catch (Exception ex) {
+                System.out.println("Successfully moved vertical.");
+            } catch (IDInvalidException ex) {
+                System.out.println("Failed to move vertical.");
+                response.status(404);
+            } catch (BadMoveTurnException ex) {
                 System.out.println("Failed to move vertical.");
                 response.status(422);
             }
