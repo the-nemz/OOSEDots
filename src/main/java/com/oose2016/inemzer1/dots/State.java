@@ -46,7 +46,6 @@ public class State {
      */
     public void scoreForRed(int scores) {
         this.redScore += scores;
-        System.out.println("Red scored " + String.valueOf(scores));
         this.checkDone();
     }
 
@@ -56,7 +55,6 @@ public class State {
      */
     public void scoreForBlue(int scores) {
         this.blueScore += scores;
-        System.out.println("Blue scored " + String.valueOf(scores));
         this.checkDone();
     }
 
