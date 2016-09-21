@@ -1,5 +1,9 @@
 # OOSE Assignment 1: Dots
 
+Isaac Nemzer
+inemzer1
+9/21/2016
+
 This is the front end for [assignment 1][Assn1] where you'll create an implementation of the classic game, [Dots][UCLA-Dots]. A working implementation can be found deployed on Heroku [here][Heroku-Dots].
 
 Download this repository as a .zip and unpack it in the `src/main/resources/public/` directory of your project. You can use the [Todo app][Todo] as a starting point to help you get running with Spark.
